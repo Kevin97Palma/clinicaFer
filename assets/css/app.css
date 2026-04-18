@@ -1,0 +1,346 @@
+/* ============================================================
+   SGC — Estilos principales (compatibilidad + utilidades)
+   sgc-ui.css define el sistema de diseño — este archivo
+   SOLO agrega utilidades y componentes legacy.
+   ============================================================ */
+
+/* ── Variables (compatibilidad — las nuevas están en sgc-ui.css) ── */
+:root {
+    /* Resetear navbar-h a 0: el nuevo layout NO usa navbar superior */
+    --sgc-navbar-h:    0px;
+    /* Mantener sidebar ancho en sync con sgc-ui.css */
+    --sgc-sidebar-w:   220px;
+    /* Legacy variables que otros módulos pueden usar */
+    --sgc-radius:      10px;
+    --sgc-shadow:      none;
+    --sgc-border:      rgba(0,0,0,0.09);
+}
+
+/* ── Base ───────────────────────────────────────── */
+body {
+    background: var(--sgc-bg, #f5f5f2);
+    color: var(--sgc-text, #1a1a1a);
+    font-family: var(--sgc-font, 'Inter', system-ui, sans-serif);
+    font-size: 13px;
+}
+
+/* ── Sidebar — SOLO posicionamiento base ─────────── */
+/* sgc-ui.css define el estilo; aquí solo corregimos
+   conflictos del layout antiguo */
+.sgc-sidebar {
+    position: fixed;
+    top: 0;                          /* ← era var(--sgc-navbar-h) = 56px */
+    left: 0;
+    width: var(--sgc-sidebar-w);
+    height: 100vh;                   /* ← era calc(100vh - 56px) */
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1030;
+    transition: transform .25s ease;
+    /* NO padding aquí — lo maneja sgc-ui.css */
+}
+
+/* ── Sidebar links — usar estilos de sgc-ui.css ─── */
+/* Sobreescribir el azul oscuro sólido del active */
+.sgc-sidebar__link.active {
+    background: var(--sgc-primary-light, #E6F1FB) !important;
+    color: var(--sgc-primary, #185FA5) !important;
+    font-weight: 500;
+}
+
+.sgc-sidebar__link.active .sgc-sidebar__icon {
+    color: var(--sgc-primary, #185FA5) !important;
+}
+
+/* ── Main content — sin margin-top ──────────────── */
+.sgc-main {
+    margin-left: var(--sgc-sidebar-w);
+    margin-top: 0;                   /* ← era var(--sgc-navbar-h) = 56px */
+    min-height: 100vh;
+    transition: margin-left .25s ease;
+}
+
+/* ── Topbar — sticky arriba del main ────────────── */
+.sgc-topbar {
+    margin-left: var(--sgc-sidebar-w);
+}
+
+/* ── Overlay móvil ──────────────────────────────── */
+.sgc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 1025;
+}
+.sgc-overlay.show { display: block; }
+
+/* ── Responsive — breakpoint correcto: 768px ─────── */
+@media (max-width: 767.98px) {
+    .sgc-sidebar {
+        transform: translateX(-100%);
+    }
+    .sgc-sidebar.show {
+        transform: translateX(0);
+    }
+    .sgc-main {
+        margin-left: 0;
+    }
+    .sgc-topbar {
+        margin-left: 0;
+    }
+    /* KPIs en 2x2 en mobile */
+    .sgc-kpi-grid-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* ── Toast container — esquina inferior derecha ──── */
+/* (sgc-ui.css ya lo define, esto evita conflicto con
+   la posición antigua top: navbar-h + 1rem) */
+.sgc-toast-container {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    top: auto !important;
+}
+
+/* ── Cards Bootstrap — border-radius consistente ─── */
+.card {
+    border-radius: var(--sgc-radius) !important;
+    border: 1px solid var(--sgc-border) !important;
+    box-shadow: none !important;
+}
+.card-header {
+    border-bottom: 1px solid var(--sgc-border) !important;
+    background: var(--sgc-surface, #fff) !important;
+}
+
+/* ── Tabla ──────────────────────────────────────── */
+.table th {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--sgc-text-muted, #6b6b6b);
+}
+.table td {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* ── KPI Icon (legacy) ───────────────────────────── */
+.sgc-kpi-card {
+    border-radius: var(--sgc-radius) !important;
+}
+.sgc-kpi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* ── Avatar sm (navbar legacy) ───────────────────── */
+.sgc-avatar-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--sgc-primary-light, #E6F1FB);
+    color: var(--sgc-primary, #185FA5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+/* ── Stepper clínico (v1 — legacy, se usa en historial) ── */
+.sgc-stepper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+.sgc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 80px;
+    position: relative;
+}
+.sgc-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--sgc-border-solid, #e5e7eb);
+    z-index: 0;
+}
+.sgc-step--done::after { background: var(--sgc-success, #3B6D11) !important; }
+.sgc-step__circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--sgc-border-solid, #e5e7eb);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 1;
+    position: relative;
+    color: var(--sgc-text-light, #9ca3af);
+}
+.sgc-step--done .sgc-step__circle {
+    background: var(--sgc-success, #3B6D11);
+    border-color: var(--sgc-success, #3B6D11);
+    color: #fff;
+}
+.sgc-step--active .sgc-step__circle {
+    background: var(--sgc-primary, #185FA5);
+    border-color: var(--sgc-primary, #185FA5);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, .15);
+}
+.sgc-step__label {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 6px;
+    color: var(--sgc-text-muted, #6b6b6b);
+    font-weight: 400;
+}
+.sgc-step--active .sgc-step__label { color: var(--sgc-primary, #185FA5); font-weight: 500; }
+.sgc-step--done .sgc-step__label   { color: var(--sgc-success, #3B6D11); }
+
+/* ── Skeleton loader (legacy compat) ─────────────── */
+.sgc-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    display: block;
+}
+
+/* ── Wizard registro paciente ────────────────────── */
+.wiz-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+}
+.wiz-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+.wiz-step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--sgc-border-solid, #e5e7eb);
+    background: #fff;
+    color: var(--sgc-text-light, #9ca3af);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: default;
+    transition: background .2s, border-color .2s, box-shadow .2s, color .2s;
+    position: relative;
+    z-index: 1;
+}
+.wiz-step-circle.active {
+    background: var(--sgc-primary, #185FA5);
+    border-color: var(--sgc-primary, #185FA5);
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(24, 95, 165, .15);
+}
+.wiz-step-circle.done {
+    background: var(--sgc-success, #3B6D11);
+    border-color: var(--sgc-success, #3B6D11);
+    color: #fff;
+}
+.wiz-step-label {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--sgc-text-light, #9ca3af);
+    text-align: center;
+    margin-top: 6px;
+    max-width: 80px;
+    line-height: 1.2;
+    transition: color .2s;
+}
+.wiz-step-label.active { color: var(--sgc-primary, #185FA5); font-weight: 500; }
+.wiz-step-label.done   { color: var(--sgc-success, #3B6D11); }
+.wiz-step-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--sgc-border-solid, #e5e7eb);
+    margin-top: 17px;
+    min-width: 24px;
+    max-width: 100px;
+    transition: background .3s ease;
+}
+.wiz-step-connector.done { background: var(--sgc-success, #3B6D11); }
+.wiz-panel {
+    animation: wizFadeUp .22s ease both;
+}
+@keyframes wizFadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Notificaciones ─────────────────────────────── */
+.sgc-notif--unread {
+    background: var(--sgc-primary-light, #E6F1FB);
+    border-left: 3px solid var(--sgc-primary, #185FA5);
+}
+
+/* ── Badge rol (legacy navbar) ───────────────────── */
+.sgc-badge--rol {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+/* ── Layout responsive: grids de 2 columnas → 1 col en mobile ── */
+@media (max-width: 767.98px) {
+    /* Dashboard: citas + panel derecho */
+    [style*="grid-template-columns:1fr 280px"],
+    [style*="grid-template-columns: 1fr 280px"] {
+        grid-template-columns: 1fr !important;
+    }
+    /* Perfil: columna principal + side panel */
+    [style*="display:flex;gap:12px;align-items:flex-start"] {
+        flex-direction: column !important;
+    }
+    .sgc-side-panel {
+        width: 100% !important;
+        position: static !important;
+    }
+    /* Bienvenida: ocultar pill de alerta en texto si no cabe */
+    .sgc-welcome-bar {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+}
+
+/* ── Utilidades ─────────────────────────────────── */
+.cursor-pointer { cursor: pointer; }
+.fs-7  { font-size: 11px; }
+.fs-8  { font-size: 10px; }
+code   { font-size: 11px; background: var(--sgc-neutral-light, #F3F4F6); padding: 1px 5px; border-radius: 4px; }
+.w-100 { width: 100% !important; }

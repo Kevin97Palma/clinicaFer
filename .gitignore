@@ -1,0 +1,55 @@
+# ── Entorno y configuración sensible ──────────────
+.env
+.env.local
+.env.production
+*.env
+
+# ── Vendor / dependencias ──────────────────────────
+vendor/
+node_modules/
+
+# ── Archivos de almacenamiento (subidos por usuarios) ──
+storage/consentimientos/
+storage/anamnesis/
+storage/evaluaciones/
+storage/documentos/
+# Mantener la estructura del directorio
+!storage/.htaccess
+!storage/consentimientos/.gitkeep
+!storage/anamnesis/.gitkeep
+!storage/evaluaciones/.gitkeep
+!storage/documentos/.gitkeep
+
+# ── Logs y caché ───────────────────────────────────
+*.log
+*.cache
+/logs/
+/cache/
+/tmp/
+
+# ── IDE y sistema operativo ────────────────────────
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Claude Code (settings locales, no del proyecto) ──
+.claude/settings.local.json
+
+# ── Scripts de deploy (contienen credenciales) ─────
+deploy_*.py
+database/ssh_deploy.py
+insertar_demo_data.py
+generar_manual_testing.py
+
+# ── Archivos temporales PHP ────────────────────────
+*.swp
+*.swo
+*~
+
+# ── PDFs generados / temporales ───────────────────
+*.pdf
+
+# ── Setup scripts (ejecutar solo una vez) ─────────
+setup_mejoras.php

@@ -1,5 +1,2 @@
-# Bloquear ejecución de PHP en storage
-<FilesMatch "\.php$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# Defensa adicional: el almacenamiento nunca se sirve por HTTP
+Require all denied

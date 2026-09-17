@@ -1,32 +1,14 @@
+# Cuando el hosting apunta a la raíz del proyecto (no a /public):
+# todo se reescribe hacia public/, por lo que app/, config/, database/, storage/ y .env
+# nunca son accesibles por URL.
 Options -Indexes
 
-# Proteger archivos sensibles
-<FilesMatch "\.(env|sql|py|log|md|json|lock)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
-# Proteger directorios de sistema
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Bloquear acceso directo a /storage/
-    RewriteRule ^storage/(.*)$ /modules/errors/403.php [L,F]
-
-    # Bloquear acceso a /database/
-    RewriteRule ^database/(.*)$ /modules/errors/403.php [L,F]
-
-    # Bloquear acceso a /config/
-    RewriteRule ^config/(.*)$ /modules/errors/403.php [L,F]
+    RewriteRule ^public/ - [L]
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-# Headers de seguridad
-<IfModule mod_headers.c>
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-XSS-Protection "1; mode=block"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-
-# Encoding UTF-8
-AddDefaultCharset UTF-8
+<FilesMatch "^\.|\.(env|sql|log|md|gz|ini|lock|json|py|sh)$">
+    Require all denied
+</FilesMatch>

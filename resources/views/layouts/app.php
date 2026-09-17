@@ -19,7 +19,7 @@ $alertCount = can('alerts.view') ? count(\App\Services\AlertService::openForUser
   <link rel="icon" href="<?= asset('images/favicon.svg') ?>" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="<?= asset('css/app.css') ?>" rel="stylesheet">
@@ -37,7 +37,7 @@ $alertCount = can('alerts.view') ? count(\App\Services\AlertService::openForUser
         <div class="brand-name text-truncate"><?= e($brand) ?></div>
         <div class="brand-sub text-truncate"><?= e($profName ?: 'Gestión clínica') ?></div>
       </div>
-      <button type="button" class="btn-close btn-close-white ms-auto d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+      <button type="button" class="btn-close ms-auto d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
     </div>
     <nav class="nav-side">
       <?php if (can('dashboard.view')): ?><a class="<?= nav_active('/') ?>" href="<?= e(url('/')) ?>"><i class="bi bi-grid-1x2"></i> Dashboard</a><?php endif; ?>
@@ -55,7 +55,7 @@ $alertCount = can('alerts.view') ? count(\App\Services\AlertService::openForUser
         <a class="<?= nav_active('/pagos') . nav_active('/paquetes') ?>" href="<?= e(url('pagos')) ?>"><i class="bi bi-wallet2"></i> Pagos</a>
       <?php endif; ?>
       <?php if (can('reports.view')): ?><a class="<?= nav_active('/reportes') ?>" href="<?= e(url('reportes')) ?>"><i class="bi bi-bar-chart-line"></i> Reportes</a><?php endif; ?>
-      <?php if (can('alerts.view')): ?><a class="<?= nav_active('/alertas') ?>" href="<?= e(url('alertas')) ?>"><i class="bi bi-bell"></i> Alertas <?php if ($alertCount): ?><span class="ms-auto badge rounded-pill" style="background:#c47a53"><?= $alertCount ?></span><?php endif; ?></a><?php endif; ?>
+      <?php if (can('alerts.view')): ?><a class="<?= nav_active('/alertas') ?>" href="<?= e(url('alertas')) ?>"><i class="bi bi-bell"></i> Alertas <?php if ($alertCount): ?><span class="ms-auto badge-soft badge-neutral"><?= $alertCount ?></span><?php endif; ?></a><?php endif; ?>
       <?php if (can('settings.manage') || can('users.manage') || can('evaluations.manage') || can('templates.manage')): ?>
         <a class="<?= nav_active('/configuracion') . nav_active('/usuarios') . nav_active('/auditoria') . nav_active('/respaldos') ?>"
            href="<?= e(url(can('settings.manage') ? 'configuracion' : (can('users.manage') ? 'usuarios' : 'configuracion/instrumentos'))) ?>"><i class="bi bi-gear"></i> Configuración</a>

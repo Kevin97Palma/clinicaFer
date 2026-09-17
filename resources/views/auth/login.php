@@ -11,11 +11,11 @@ $hasLogo = setting('logo_file', '') !== '';
         <div class="brand-sub"><?= e(setting('professional_name', 'Gestión clínica')) ?></div>
       </div>
     </div>
-    <div style="position:relative; z-index:1">
+    <div>
       <h1>Registrar una sola vez, acompañar mejor.</h1>
-      <p class="mt-3 mb-0" style="max-width:420px; color:#b9cfca">Agenda, expediente, sesiones, planes terapéuticos y pagos en un mismo lugar, pensados para la consulta infantil y adolescente.</p>
+      <p class="mt-3 mb-0 text-muted" style="max-width:46ch">Agenda, expediente, sesiones, planes terapéuticos y pagos en un mismo lugar, pensados para la consulta infantil y adolescente.</p>
     </div>
-    <div class="small" style="color:#86a39d; position:relative; z-index:1"><i class="bi bi-shield-lock me-1"></i> Acceso restringido · información clínica confidencial</div>
+    <div class="small text-muted"><i class="bi bi-shield-lock me-1"></i> Acceso restringido · información clínica confidencial</div>
   </section>
 
   <section class="auth-panel">
